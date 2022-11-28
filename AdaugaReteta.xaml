@@ -5,30 +5,34 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Proiect"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdaugaReteta" Background="Green">
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Title="AdaugaReteta" Background="#63386D">
 
     <Grid>
-        <StackPanel VerticalAlignment="Top" Name="Stack1" >
+        <StackPanel  Height="70" Margin="0,0,0,0" VerticalAlignment="Top">
+            <Label Margin="0,0,20,0" Name="Persoana" Height="40" Width="100" VerticalContentAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="4" Background="#CBA196" Opacity="0.7"></Label>
+            <Button Click="Logout" Name="logout" Width="60" BorderBrush="Black" BorderThickness="2"  HorizontalAlignment="Right" Content="Logout" FontStyle="Italic" Background="#CBA196" Opacity="0.7" Margin="0,2,40,0" ></Button>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Top" Name="Stack1" Visibility="Visible">
             <Label FontWeight="Bold" Content="Rețetă nouă" Width="300" Height="70" FontSize="40" HorizontalContentAlignment="Center" Background="BlanchedAlmond" Opacity="0.8" Margin="0,30,0,0"  Name="Titlu" BorderBrush="Azure" BorderThickness="5"></Label>
-            <Label FontStyle="Oblique" Content="Introduceți numele rețetei:" Margin="40,40,0,0" Height="40" Width="250"  HorizontalAlignment="Left" FontSize="18" Name="Prompt"></Label>
+            <Label FontStyle="Oblique" Content="Introduceți numele rețetei:" Margin="40,80,0,0" Height="40" Width="250"  HorizontalAlignment="Left" FontSize="18" Name="Prompt"></Label>
             <StackPanel Orientation="Horizontal" Margin="40,10,0,0" >
-                <TextBox Background="Beige" Opacity="0.7" VerticalAlignment="Center" Name="Reteta"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ></TextBox>
+                <TextBox Background="#CBA196" Opacity="0.7" VerticalAlignment="Center" Name="Reteta"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ></TextBox>
                 <Label Visibility="Hidden" BorderBrush="Black" BorderThickness="3" Name="Error" Margin="20,0,0,0" Height="40" Width="200" FontSize="16" FontWeight="Bold"></Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="40,30,0,0">
+            <StackPanel Orientation="Horizontal" Margin="40,70,0,0">
                 <Label  FontStyle="Oblique" Content="Introduceți numele ingredientului, iar apoi adăugați-l." VerticalContentAlignment="Center"  Height="40" Width="450" HorizontalAlignment="Left" FontSize="18" Name="Prompt1"></Label>
                 <Label Name="Label"  Margin="70,0,0,0" Width="220" Content="Cantitate + unitate [ml/g/buc]:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15" FontStyle="Oblique"></Label>
             </StackPanel>
-                
+
             <StackPanel Margin="40,10,0,0" Orientation="Horizontal">
-                <TextBox Name="Ingredient" Background="Beige" VerticalAlignment="Center" Opacity="0.7"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ></TextBox>
-                <TextBox Name="Cantitate" Background="Beige" Opacity="0.7" Height="40" Width="60" FontSize="20" HorizontalContentAlignment="Left" Margin="30,0,0,0"></TextBox>
-                <TextBox Name="Unitate" Background="Beige" Opacity="0.7" Height="40" Width="60" FontSize="20" HorizontalContentAlignment="Left" Margin="30,0,0,0"></TextBox>
-                <Button Name="buton1" Click="AdaugaIngredient" Content="+" Height="40" Width="40" Margin="20,0,0,0" FontSize="30" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Top"></Button>
+                <TextBox Name="Ingredient" Background="#CBA196" VerticalAlignment="Center" Opacity="0.7"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ></TextBox>
+                <TextBox Name="Cantitate" Background="#CBA196" Opacity="0.7" Height="40" Width="60" FontSize="20" HorizontalContentAlignment="Left" Margin="30,0,0,0"></TextBox>
+                <TextBox Name="Unitate" Background="#CBA196" Opacity="0.7" Height="40" Width="60" FontSize="20" HorizontalContentAlignment="Left" Margin="30,0,0,0"></TextBox>
+                <Button Background="#CBA196" Name="buton1" Click="AdaugaIngredient" Content="+" Height="40" Width="40" Margin="20,0,0,0" FontSize="30" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Top"></Button>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="150,30,0,0" >
-                <Button Name="buton" Background="Bisque"  Height="30" Width="200" FontStyle="Oblique" FontWeight="Bold" Click="AdaugaLista"  Content="Adaugă Rețetă" HorizontalAlignment="Left"></Button>
+            <StackPanel Orientation="Horizontal" Margin="150,80,0,0" >
+                <Button Name="buton" Background="BlanchedAlmond"  Height="30" Width="200" FontStyle="Oblique" FontWeight="Bold" Click="AdaugaLista"  Content="Adaugă Rețetă" HorizontalAlignment="Left"></Button>
                 <Button  Name="Pasi" Visibility="Hidden"  Margin="100,0,0,0" Background="Bisque"  Height="30" Width="200" FontStyle="Oblique" FontWeight="Bold" Click="AdaugaPasi"  Content="Adaugă pași" HorizontalAlignment="Left"></Button>
             </StackPanel>
         </StackPanel>
@@ -42,11 +46,21 @@
                 <TextBox  Background="Beige" Opacity="0.7" VerticalAlignment="Center" Name="Pas"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ></TextBox>
                 <Button Click="AdaugaPas" Content="+" Margin="80,0,0,0" Height="40" Width="40" FontSize="25"></Button>
             </StackPanel>
-            <Label Visibility="Hidden" BorderBrush="Black" BorderThickness="3" HorizontalContentAlignment="Center" Margin="150,20,0,0" Height="40" FontSize="18" FontWeight="Bold" Opacity="0.7" Background="Khaki" Width="200" HorizontalAlignment="Left" Name="Error1"></Label>
+            <Label Visibility="Hidden" BorderBrush="Black" BorderThickness="3" HorizontalContentAlignment="Center" Margin="150,20,0,0" Height="40" FontSize="18" FontWeight="Bold" Opacity="0.7" Background="#CBA196" Width="200" HorizontalAlignment="Left" Name="Error1"></Label>
             <Button Click="finalizeaza" Margin="0,80,0,0" Height="50" Width="200" Content="Finalizează" FontWeight="Bold" FontSize="20"></Button>
         </StackPanel>
-        <StackPanel Margin="100" Name="Stack3" Visibility="Hidden">
+        <StackPanel Name="Stack3" Visibility="Hidden" HorizontalAlignment="Center" Width="1000">
             <Label Width="400" Height="50" HorizontalAlignment="Center" Margin="0,100,0,0" Content="Rețetă adăugată cu succes!" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Background="Beige"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="110,80,0,0">
+                <TextBox Name="PhotoLink" Background="#CBA196" VerticalAlignment="Center" Opacity="0.7"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Center" ></TextBox>
+                <Label Margin="30,0,0,0" Content="Link poză (opțional)" FontSize="15" FontStyle="Italic"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="110,80,0,0" HorizontalAlignment="Center">
+                <TextBox Name="VideoLink" Background="#CBA196" VerticalAlignment="Center" Opacity="0.7"  Width="500" Height="40" FontSize="20" HorizontalContentAlignment="Left" HorizontalAlignment="Left" ></TextBox>
+                <Label Margin="30,0,0,0" Content="Link video (opțional)" FontSize="15" FontStyle="Italic"></Label>
+            </StackPanel>
+            <Button Click="Adauga" Margin="0,50,0,0" Width="300" FontSize="15" FontWeight="Bold" FontStyle="Italic" Height="50" Content="Adaugă și întoarce-te la &#x22;Contul Meu&#x22;"></Button>
         </StackPanel>
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Page>
