@@ -20,21 +20,31 @@ namespace Proiect
     /// </summary>
     public partial class Pagina_Principala : Page
     {
-        public Pagina_Principala()
+        string User;
+        public Pagina_Principala(string user)
         {
             InitializeComponent();
-            Titlu.Foreground = Brushes.DarkSalmon;
+            Persoana.Foreground = Brushes.White;
+            logout.Foreground = Brushes.White;
+            copyright.Foreground = Brushes.Gray;
+            Persoana.Content = user;
+            User = user;
         }
         
 
         private void ArataRetete(object sender,RoutedEventArgs e)
         {
-            Main.Navigate(new ArataRetete());
+            Main.Navigate(new ArataRetete("IonutCorbu"));
         }
 
-        private void AdaugaLista(object sender, RoutedEventArgs e)
+        private void Profilulmeu(object sender, RoutedEventArgs e)
         {
-            Main.Navigate(new AdaugaReteta());
+           Main.Navigate(new ContulMeu("IonutCorbu"));
+        }
+
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            //Main.Navigate(new Login(Persoana.Content.toString()));
         }
     }
 }
