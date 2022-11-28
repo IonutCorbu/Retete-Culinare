@@ -1,0 +1,31 @@
+﻿<Page x:Class="Proiect.ContulMeu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Proiect"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Title="ContulMeu">
+
+    <Grid Background="#63386D">
+        <StackPanel>
+            <StackPanel  Height="70" Margin="0,0,0,0" VerticalAlignment="Top">
+                <Label Margin="0,0,20,0" Name="Persoana" Height="40" Width="100" VerticalContentAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="4" Background="#CBA196" Opacity="0.7"></Label>
+                <Button  Click="Logout" Name="logout" Width="60" BorderBrush="Black" BorderThickness="2"  HorizontalAlignment="Right" Content="Logout" FontStyle="Italic" Background="#CBA196" Opacity="0.7" Margin="0,2,40,0" ></Button>
+            </StackPanel>
+            <StackPanel Margin="0,20,0,0">
+                <Label Height="70" Width="500" Background="#CBA196" Content="Contul meu" HorizontalContentAlignment="Center" FontSize="50" FontWeight="Bold">
+                </Label>
+                <StackPanel Orientation="Horizontal" Margin="100,160,60,0">
+                    <Button BorderBrush="Black" BorderThickness="5" Content="Rețetele mele" Background="#CBA196" Width="400" Height="80" FontSize="30" FontWeight="Bold" Click="Arata_retete">
+                    </Button>
+                    <Button BorderBrush="Black" BorderThickness="5" Click="Adaugaretete"  Content="Adauga Rețetă" Margin="40,0,0,0" Width="400" FontSize="30" FontWeight="Bold" Background="#CBA196">
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <Label Opacity="0.7" Name="copyright" FontWeight="Bold" Margin="0,120,20,0" HorizontalAlignment="Right" Content="&#169; 2022 Rețete Culinare Corbu Ionuț-Daniel &#x26; Ionel Ana" ></Label>
+        </StackPanel>
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden"></Frame>
+    </Grid>
+</Page>
