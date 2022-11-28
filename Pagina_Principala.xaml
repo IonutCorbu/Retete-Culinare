@@ -5,16 +5,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Proiect"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Pagina_Principala" Height="450" Width="800" Background="Green">
+      d:DesignHeight="600" d:DesignWidth="1000"
+      Title="Pagina_Principala" Height="600" Width="1000" Background="#63386D">
 
     <Grid>
-
-        <StackPanel Orientation="Vertical"  VerticalAlignment="Center" Margin="0,0,0,0" Height="450" Width="800" >
-            <Label BorderBrush="Azure" BorderThickness="5" FontSize="40" Width="600" Name="Titlu" FontWeight="Bold"   Background="Khaki" Content="Rețete Culinare" Margin="0,30,0,80" VerticalAlignment="Center" HorizontalContentAlignment="Center" Opacity="0.7" Height="72" HorizontalAlignment="Center"></Label>
-            <StackPanel Orientation="Horizontal" Margin="0,50,0,0" Height="100">
-                <Button FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Background="Khaki" HorizontalContentAlignment="Center" Content="Afișează rețete" Click="ArataRetete" Height="80" Width="298" Margin="70,0,30,0" Opacity="0.7"  />
-                <Button FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Background="Khaki" HorizontalContentAlignment="Center" Content="Adaugă rețetă" Click="AdaugaLista" Height="80" Width="298" Margin="30,0,0,0" Opacity="0.7"  />
+        <StackPanel>
+            <StackPanel  Height="70" Margin="0,0,0,0" VerticalAlignment="Top">
+                <Label Margin="0,0,20,0" Name="Persoana" Height="40" Width="100" VerticalContentAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="4" Background="#824E71" Opacity="0.7"></Label>
+                <Button Click="Logout" Name="logout" Width="60" BorderBrush="Black" BorderThickness="2"  HorizontalAlignment="Right" Content="Logout" FontStyle="Italic" Background="#824E71" Opacity="0.7" Margin="0,2,40,0" ></Button>
+            </StackPanel>
+            <StackPanel Orientation="Vertical"  VerticalAlignment="Center" Margin="0,0,0,0"  Width="1000" >
+                <Label BorderBrush="#745296" BorderThickness="5" FontSize="40" Width="600" Name="Titlu" FontWeight="Bold"   Background="#91F5AD" Content="Rețete Culinare" Margin="0,30,0,80" VerticalAlignment="Center" HorizontalContentAlignment="Center" Opacity="0.7" Height="72" HorizontalAlignment="Center"></Label>
+                <StackPanel Margin="0,0,0,0">
+                    <Button FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Background="#8B9EB7" HorizontalContentAlignment="Center" Content="Vizualizează rețete" Click="ArataRetete" Height="80" Width="400" Opacity="0.7" BorderBrush="Black" BorderThickness="4"  />
+                    <Button FontWeight="Bold" FontSize="25" VerticalAlignment="Center" Background="#8B9EB7" HorizontalContentAlignment="Center" Content="Profilul meu" BorderBrush="Black"  BorderThickness="4" Click="Profilulmeu" Height="80" Width="298" Margin="0,50,0,0" Opacity="0.7"  />
+                </StackPanel>
+                <Label Opacity="0.7" Name="copyright" FontWeight="Bold" Margin="0,78,20,0" HorizontalAlignment="Right" Content="&#169; 2022 Rețete Culinare Corbu Ionuț-Daniel &#x26; Ionel Ana" ></Label>
             </StackPanel>
         </StackPanel>
         <Frame x:Name="Main" NavigationUIVisibility="Hidden"></Frame>
