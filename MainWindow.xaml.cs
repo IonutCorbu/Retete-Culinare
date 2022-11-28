@@ -22,11 +22,12 @@ namespace Proiect
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+     
         public MainWindow()
         {
             InitializeComponent();
-            Main.Navigate(new Pagina_Principala());
+            
+            Main.Navigate(new Pagina_Principala("IonutCorbu"));
         }
 
        
