@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Proiect"
         mc:Ignorable="d"
-        Title="MainWindow" Height="475" Width="800">
-    <Grid>
+        Title="Rețete Culinare" Icon="icon.ico" Height="600" Width="1000" MinHeight="600" MaxHeight="600" MinWidth="1000" MaxWidth="1000">
+    <Grid  MaxHeight="600" MinHeight="600" MaxWidth="1000" MinWidth="1000">
         <Frame x:Name="Main" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>
