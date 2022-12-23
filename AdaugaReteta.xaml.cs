@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace Proiect
 {
     /// <summary>
@@ -27,7 +25,6 @@ namespace Proiect
         public AdaugaReteta(string user)
         {
             InitializeComponent();
-            Titlu.Foreground = Brushes.DarkSalmon;
             Prompt.Foreground = Brushes.Gray;
             Prompt1.Foreground = Brushes.Gray;
             User = user;
@@ -66,10 +63,59 @@ namespace Proiect
             
         }
 
+        private void UpdateWords()
+        {
+            var context = new Organizator_ReteteEntities();
+            var cuvinte = ret.Denumire.Split(' ');
+            foreach (var token in cuvinte)
+            {
+                bool ok = false;
+                int id = -1;
+                foreach (var cuv in context.Cuvinte_cheie)
+                {
+                    if (cuv.Cuvant == token)
+                    {
+                        ok = true;
+                        id = cuv.CuvantCheieID;
+                        break;
+                    }
+                }
+                Retete_Cuvinte ret_cuv;
+                if (ok == false)
+                {
+                    Cuvinte_cheie cuvant = new Cuvinte_cheie
+                    {
+                        Cuvant = token
+                    };
+                    var context1 = new Organizator_ReteteEntities();
+                    context1.Cuvinte_cheie.Add(cuvant);
+                    context1.SaveChanges();
+                    ret_cuv = new Retete_Cuvinte
+                    {
+                        RetetaID = ret.RetetaID,
+                        CuvantcheieID = cuvant.CuvantCheieID
+                    };
+                }
+                else
+                {
+                    ret_cuv = new Retete_Cuvinte
+                    {
+                        RetetaID = ret.RetetaID,
+                        CuvantcheieID = id
+                    };
+
+                }
+                var context2 = new Organizator_ReteteEntities();
+                context2.Retete_Cuvinte.Add(ret_cuv);
+                context2.SaveChanges();
+            }
+
+        }
+
         private void AdaugaLista(object sender, RoutedEventArgs e)
         {
             var context = new Organizator_ReteteEntities();
-            if (ingrediente.Count() == 0)
+            if (ingrediente.Count == 0)
             {
                 Error.Visibility = Visibility.Visible;
                 Error.Content = "EROARE-0 ingrediente";
@@ -95,7 +141,10 @@ namespace Proiect
                 Denumire = Reteta.Text,
                 UserId = id
             };
-            context.Retetes.Add(ret);
+            var context1 = new Organizator_ReteteEntities();
+            context1.Retetes.Add(ret);
+            context1.SaveChanges();
+            UpdateWords();
             
             foreach(var ing in ingrediente)
             {
@@ -140,6 +189,7 @@ namespace Proiect
             Error.Content = "Rețetă adăugată";
             buton.Visibility = Visibility.Hidden;
             Pasi.Visibility = Visibility.Visible;
+            backbutton.Visibility = Visibility.Hidden;
         }
 
         private void AdaugaPasi(object sender, RoutedEventArgs e)
@@ -204,11 +254,16 @@ namespace Proiect
                 context.Imaginis.Add(imagine);
             }
             context.SaveChanges();
-            //Main.Navigate(new ContulMeu());
+            Main.Navigate(new ContulMeu("IonutCorbu"));
         }
         private void Logout(object sender, RoutedEventArgs e)
         {
             //Main.Navigate(new Login(Persoana.Content.toString()));
+        }
+
+        private void back(object sender, RoutedEventArgs e)
+        {
+            Main.Navigate(new ContulMeu("IonutCorbu"));
         }
     }
 }
