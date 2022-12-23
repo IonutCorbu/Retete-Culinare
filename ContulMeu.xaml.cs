@@ -41,5 +41,9 @@ namespace Proiect
         {
             Main.Navigate(new AdaugaReteta("IonutCorbu"));
         }
+        private void back(object sender, RoutedEventArgs e)
+        {
+            Main.Navigate(new Pagina_Principala("IonutCorbu"));
+        }
     }
 }
