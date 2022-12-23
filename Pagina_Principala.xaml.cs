@@ -34,7 +34,7 @@ namespace Proiect
 
         private void ArataRetete(object sender,RoutedEventArgs e)
         {
-            Main.Navigate(new ArataRetete("IonutCorbu"));
+            //Main.Navigate(new ArataRetete("IonutCorbu"));
         }
 
         private void Profilulmeu(object sender, RoutedEventArgs e)
