@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Linq;
 namespace Proiect
 {
     /// <summary>
@@ -71,15 +72,14 @@ namespace Proiect
             {
                 bool ok = false;
                 int id = -1;
-                foreach (var cuv in context.Cuvinte_cheie)
-                {
-                    if (cuv.Cuvant == token)
+                var res = (from c in context.Cuvinte_cheie
+                              where c.Cuvant == token
+                              select c).First();
+                    if(res!=null)
                     {
                         ok = true;
-                        id = cuv.CuvantCheieID;
-                        break;
+                        id = res.CuvantCheieID;
                     }
-                }
                 Retete_Cuvinte ret_cuv;
                 if (ok == false)
                 {
@@ -122,18 +122,24 @@ namespace Proiect
                 Error.Foreground = Brushes.Red;
                 return;
             }
-            foreach (var reteta in context.Retetes)
-                if(reteta.Denumire==Reteta.Text.ToString())
-                {
+            var res = from r in context.Retetes
+                      where r.Denumire == Reteta.Text.ToString()
+                      select r;
+
+            if (res.Count() != 0)
+            {
+
                     Error.Visibility = Visibility.Visible;
                     Error.Content = "EROARE-Reteta exista deja";
                     Error.Foreground = Brushes.Red;
                     return;
-                }
+            }
             int id = -1;
-            foreach (var user in context.Useris)
+            var user = (from u in context.Useris
+                       where u.Username == User
+                       select u).First();
+            if(user!=null)
             {
-                if (user.Username == User)
                     id = user.UserId;
             }
             ret = new Retete
@@ -149,20 +155,22 @@ namespace Proiect
             foreach(var ing in ingrediente)
             {
                 bool ok = false;
-                foreach (var i in context.Ingredientes)
+                var query1 = from c in context.Ingredientes
+                                  where c.Denumire == ing.Key
+                                  select c;
+                if(query1.Count()!=0)
                 {
-                    if (ing.Key == i.Denumire)
+                    foreach (var i in query1)
                     {
                         ReteteIngrediente ri = new ReteteIngrediente
                         {
                             RetetaID = ret.RetetaID,
                             IngredientID = i.IngredientID,
                             Cantitate = ing.Value.Key,
-                            Unitate=ing.Value.Value
+                            Unitate = ing.Value.Value
                         };
                         context.ReteteIngredientes.Add(ri);
                         ok = true;
-                        break;
                     }
                 }
                     if(ok==false)
