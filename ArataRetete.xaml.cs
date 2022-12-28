@@ -30,31 +30,27 @@ namespace Proiect
             User = user;
             Persoana.Content = user;
             var context = new Organizator_ReteteEntities();
-            foreach(var us in context.Useris)
+            var us = (from u in context.Useris
+                     where u.Username == User
+                     select u).First();
+            id_user = us.UserId;
+            var r = from re in context.Retetes
+                    where re.UserId == id_user
+                    select re;
+            foreach(var re in r)
             {
-                if (us.Username == User)
-                {
-                    id_user = us.UserId;
-                    break;
-                }
-            }
-            foreach (var ret in context.Retetes)
-            {
-                if (ret.UserId == id_user)
-                {
-                    Button but = new Button();
-                    but.Content = ret.Denumire;
-                    but.Click += treatclick;
-                    but.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8B, 0x9E, 0xB7));
-                    but.Width = reteta.Width;
-                    but.Height = Math.Min(reteta.Height / context.Retetes.Count(), 40);
-                    but.FontSize = 20;
-                    but.HorizontalContentAlignment = HorizontalAlignment.Left;
-                    but.FontWeight = FontWeights.Bold;
-                    but.BorderBrush = Brushes.Black;
-                    but.BorderThickness = new Thickness(3);
-                    reteta.Children.Add(but);
-                }
+                Button but = new Button();
+                but.Content = re.Denumire;
+                but.Click += treatclick;
+                but.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8B, 0x9E, 0xB7));
+                but.Width = reteta.Width;
+                but.Height = Math.Min(45, 40);
+                but.FontSize = 20;
+                but.HorizontalContentAlignment = HorizontalAlignment.Left;
+                but.FontWeight = FontWeights.Bold;
+                but.BorderBrush = Brushes.Black;
+                but.BorderThickness = new Thickness(3);
+                reteta.Children.Add(but);
             }
            
         }
@@ -67,94 +63,84 @@ namespace Proiect
             stack_reteta.Visibility = Visibility.Visible;
             nume_reteta.Content = but.Content;
             ret=null;
-            foreach (var r in context.Retetes)
-            {
-                if(r.Denumire==nume_reteta.Content.ToString())
-                {
-                    ret = r;
-                    break;
-                }
-            }
-            foreach(var image in context.Imaginis)
-            {
-                if (ret.RetetaID == image.RetetaID)
-                    imagine.Source = new BitmapImage(new Uri(image.Calea_Imaginii));
-            }
+            ret = (from r in context.Retetes
+                     where r.Denumire == nume_reteta.Content.ToString()
+                     select r).First();
+            var image = (from im in context.Imaginis
+                         where im.RetetaID == ret.RetetaID
+                         select im).First();
+            imagine.Source = new BitmapImage(new Uri(image.Calea_Imaginii));
             int column = 0;
             int rows = 0;
             RowDefinition row;
-            foreach (var ingredient in context.ReteteIngredientes)
+            var ingredients = from reting in context.ReteteIngredientes
+                              join ing in context.Ingredientes on reting.IngredientID equals ing.IngredientID
+                              where reting.RetetaID == ret.RetetaID
+                              select new
+                              {
+                                  ing.IngredientID,
+                                  ing.Denumire,
+                                  reting.Cantitate,
+                                  reting.Unitate
+                              };
+
+            foreach(var ingredient in ingredients)
             {
-                if(ingredient.RetetaID==ret.RetetaID)
+                Label l = new Label();
+                l.Content = "- " + ingredient.Cantitate + ingredient.Unitate + " ";
+                l.Content += ingredient.Denumire;
+                l.Margin = new Thickness(20, 0, 0, 0);
+                l.FontSize = 13;
+                l.FontStyle = FontStyles.Italic;
+                Grid.SetColumn(l, column);
+                Grid.SetRow(l, rows);
+                ingrediente.Children.Add(l);
+                if (column == 0)
                 {
-                    Label l = new Label();
-                    l.Content = "- "+ingredient.Cantitate + ingredient.Unitate + " ";
-                    foreach(var ing in context.Ingredientes)
-                    {
-                        if (ingredient.IngredientID == ing.IngredientID)
-                        {
-                            l.Content += ing.Denumire;
-                            break;
-                        }
-                    }
-                    l.Margin = new Thickness(20,0, 0, 0);
-                    l.FontSize = 13;
-                    l.FontStyle = FontStyles.Italic;
-                    Grid.SetColumn(l, column);
-                    Grid.SetRow(l, rows);
-                    ingrediente.Children.Add(l);
-                    if (column == 0)
-                    {
-                        column = 1;
-                        row = new RowDefinition();
-                        row.Height = new GridLength(1.0, GridUnitType.Star);
-                        ingrediente.RowDefinitions.Add(row);
-                    }
-                    else
-                    {
-                        column = 0;
-                        rows++;
-                    }
-                     
-                    }
+                    column = 1;
+                    row = new RowDefinition();
+                    row.Height = new GridLength(1.0, GridUnitType.Star);
+                    ingrediente.RowDefinitions.Add(row);
+                }
+                else
+                {
+                    column = 0;
+                    rows++;
+                }
             }
+
             int i = 1;
-            foreach(var pas in context.Pasis)
+            var pasi = from pas in context.Pasis
+                       where pas.RetetaID == ret.RetetaID
+                       select pas;
+            foreach(var pas in pasi)
             {
-                if(pas.RetetaID==ret.RetetaID)
-                {
-                    Label pa = new Label();
-                    pa.Content = "Pas " + i + ": " + pas.Actiune;
-                    pa.FontWeight = FontWeights.Bold;
-  
-                    descriere.Children.Add(pa);
-                    i++;
-                }
-            }
-            foreach (var vid in context.Videouris)
-            {
-                if (vid.RetetaID == ret.RetetaID)
-                {
-                    hyperlink.Visibility = Visibility.Visible;
-                    break;
-                }
+                Label pa = new Label();
+                pa.Content = "Pas " + i + ": " + pas.Actiune;
+                pa.FontWeight = FontWeights.Bold;
+
+                descriere.Children.Add(pa);
+                i++;
             }
 
-
-
+            var videos = (from vid in context.Videouris
+                            where vid.RetetaID == ret.RetetaID
+                            select vid);
+            if (videos.Count() != null)
+                hyperlink.Visibility = Visibility.Visible;
         }
         private void onclick(object sender,RoutedEventArgs e)
         {
             var context = new Organizator_ReteteEntities();
-            foreach (var vid in context.Videouris)
-            {
-                if (vid.RetetaID == ret.RetetaID)
-                {
-                    System.Diagnostics.Process.Start(vid.Adresa);
-                    break;
-                }
-            }
+            var vid = (from video in context.Videouris
+                           where video.RetetaID == ret.RetetaID
+                           select video);
             
+            if (vid.Count() != 0)
+            {
+                Videouri video = vid.First();
+                System.Diagnostics.Process.Start(video.Adresa);
+            }
         }
         private void Logout(object sender, RoutedEventArgs e)
         {
@@ -199,12 +185,14 @@ namespace Proiect
                 }
                 return;
             }
+            
             var search_content = Search.Text.Split(' ');
+
             foreach (var ret in context.Retetes)
             {
                 foreach (string cuv in search_content)
                 {
-                    if (ret.Denumire.ToUpper().Contains(cuv.ToUpper())&& ret.UserId == id_user)
+                    if (ret.Denumire.ToUpper().Contains(cuv.ToUpper()) && ret.UserId == id_user)
                     {
                         Button but = new Button();
                         but.Content = ret.Denumire;

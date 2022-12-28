@@ -74,12 +74,13 @@ namespace Proiect
                 int id = -1;
                 var res = (from c in context.Cuvinte_cheie
                               where c.Cuvant == token
-                              select c).First();
-                    if(res!=null)
-                    {
-                        ok = true;
-                        id = res.CuvantCheieID;
-                    }
+                              select c);
+                foreach(var re in res)
+                {
+                    ok = true;
+                    id = re.CuvantCheieID;
+                    break;
+                }   
                 Retete_Cuvinte ret_cuv;
                 if (ok == false)
                 {
